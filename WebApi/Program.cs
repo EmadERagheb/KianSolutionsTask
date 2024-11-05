@@ -43,7 +43,6 @@ namespace WebApi
             var services = scope.ServiceProvider;
             var context = services.GetRequiredService<ApplicationDbContext>();
             var logger = services.GetRequiredService<ILogger<Program>>();
-            await ApplicationDbContextSeeding.Seed(context);
 
             if (app.Environment.IsProduction() && (await context.Database.GetPendingMigrationsAsync()).Count() > 0)
             {
@@ -51,6 +50,9 @@ namespace WebApi
                 {
                     await context.Database.MigrateAsync();
                     logger.LogInformation("Database Migrated Successfully");
+                    await ApplicationDbContextSeeding.Seed(context);
+                    logger.LogInformation("Database Seeded Successfully");
+
                 }
                 catch (Exception e)
                 {
