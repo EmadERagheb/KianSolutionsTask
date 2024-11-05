@@ -1,5 +1,5 @@
 export const environment = {
     production:true,
-    apiUrl: '',
-  identityApiUrl: '',
+    apiUrl: 'https://kiansolutions.runasp.net/api',
+
 };
