@@ -1,0 +1,34 @@
+<div class="input-container">
+    <div class="form-floating   position-relative">
+        <input [type]="type" placeholder="{{label()|titlecase }}" class="form-control" autocomplete="off"
+            [class.transparent-form-control]='isTransparent()' [formControl]="control"
+            [class.is-invalid]="control.invalid&&control.touched&&showValidation()"
+            [class.is-valid]="control.valid && showValidation()">
+        <div *ngIf="control.status==='PENDING'" class="fa fa-spinner fa-spin loader"></div>
+        @if(inputType()=='password'){
+        <i class="fa fw-light  border-0 px-3 position-absolute top-50 end-0 translate-middle-y"
+            [class.text-white]="isTransparent()" [ngClass]="{
+                    'fa-eye-slash': type === 'password',
+                    'fa-eye': type !== 'password',
+                    'position-left-20': control.invalid && control.touched||control.valid
+                }" (click)="toggleIcon()"></i>
+        }
+        <label [class.transparent-label]="isTransparent()"> {{label()}}</label>
+    </div>
+    @if(showValidation()){
+
+    <div *ngIf="control.hasError('required')&& control.touched"
+        class=" text-start small  small text-danger text-lowercase ">{{label()}} is required</div>
+    <div *ngIf="control.hasError('minlength')&& control.touched" class=" text-start small  text-danger text-lowercase">
+        {{label()}} must be at least {{control.getError('minlength')['requiredLength']}} characters</div>
+    <div *ngIf="control.hasError('maxlength')&& control.touched" class=" text-start small  text-danger text-lowercase">
+        {{label()}} can't be more {{control.getError('maxlength')['requiredLength']}} than character
+    </div>
+    <div *ngIf="control.hasError('ismatch')&& control.touched" class=" text-start small  text-danger text-lowercase">
+        {{label()}} not matched
+    </div>
+    <div *ngIf="control.hasError('nameexists')" class=" text-start small  text-danger text-lowercase">
+        {{label()}} {{control.value}} is used
+    </div>
+    }
+</div>

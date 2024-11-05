@@ -1,0 +1,55 @@
+<section class="question-dialog py-3 mx-0" id="question-dialog">
+
+    <div class="container-fluid">
+        <div class="row mx-0">
+            <div class="col">
+                <h1 class="m-0 p-0" matDialogTitle>{{data.title}}</h1>
+            </div>
+        </div>
+        <mat-dialog-content class="mx-0 p-0">
+         
+            <form [formGroup]="employeeForm">
+                <div class="row mx-0">
+                    <div class="col-md-8 col-12">
+                        <div class="mb-3">
+                            <app-text-input inputType="text" label="First Name"
+                                [formControl]="firstName"></app-text-input>
+                        </div>
+                        <div class="mb-3">
+                            <app-text-input inputType="text" label="List Name"
+                                [formControl]="lastName"></app-text-input>
+                        </div>
+                        <div class="mb-3">
+                            <app-text-input inputType="text" label="User Name"
+                                [formControl]="userName"></app-text-input>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="flexCheckDefault" [formControl]="active">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    Active
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </mat-dialog-content>
+        <mat-dialog-actions class="row">
+
+            <div class="col-6">
+                <div class="d-grid">
+
+                    <button (click)="save()" [disabled]="!employeeForm.dirty||!employeeForm.valid" mat-raised-button
+                        color="primary">Save</button>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="d-grid">
+                    <button mat-raised-button color="accent" class="text-white" (click)="close()">Close</button>
+                </div>
+            </div>
+        </mat-dialog-actions>
+    </div>
+</section>

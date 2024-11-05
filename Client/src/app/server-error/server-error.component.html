@@ -1,0 +1,30 @@
+@if(!isProduction){
+
+    <div class="container mt-5">
+        <h4>Internal server error - refreshing will make the error disappear</h4>
+        @if (error) {
+        <h5 class="text-danger">Error:{{error.message}}</h5>
+        <p class="font-weight-bold">This error comes from the server - not Angular</p>
+        <p>What to do next</p>
+        <ol>
+            <li>Check the network tab in chrome dev tools</li>
+            <li>Reproduce the request in postman if the same error occurs then definitely not Angular</li>
+        </ol>
+    
+        <h5>Stack Trace</h5>
+        <code class="mt-5" style="background-color:whitesmoke;">{{error.details}}</code>
+        }
+    
+    </div>
+    }
+    @else {
+        <div id="notfound">
+            <div class="notfound">
+                <div class="notfound-404"></div>
+                <h1>500</h1>
+                <h2>Oops! Internal server error</h2>
+                <p>Sorry but the server has been crashed or is temporarily unavailable</p>
+                <a routerLink="/">Back to homepage</a>
+            </div>
+        </div>
+    }

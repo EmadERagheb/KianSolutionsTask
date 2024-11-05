@@ -1,0 +1,96 @@
+<section class="py-3 question-list" id=question-list>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1>Employee List</h1>
+            </div>
+        </div>
+        @if(employees()?.data)
+        {
+        <div class="row mt-3 align-items-center order-2">
+
+            <div class="col-12 d-flex justify-content-between align-items-center">
+                <div class="header-container">
+                    <app-paging-header [totalItems]="employees()!.totalCount" [pageIndex]="employees()!.pageIndex"
+                        [pageSize]="employees()!.pageSize"></app-paging-header>
+                </div>
+                <div class="add-question">
+                    <button mat-mini-fab class="bg-primary text-white" (click)="openDialog()"
+                        matTooltip="Add New Employee" matTooltipPosition="above">
+                        <mat-icon>add</mat-icon></button>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>User Name</th>
+                                <th>Active</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (employee of employees()?.data; track employee.id; let i =
+                            $index) {
+                            <tr>
+                                <th>{{i+1}}</th>
+                                <td>{{employee.firstName}}</td>
+                                <td>{{employee.lastName}}</td>
+                                <td>{{employee.userName}}</td>
+                                <td>
+
+                                    @if(employee.active)
+                                    {
+
+                                    <mat-icon class="text-success">check</mat-icon>
+                                    }@else{
+                                    <mat-icon class="text-danger">close</mat-icon>
+                                    }
+                                </td>
+                                <td>
+                                    <div class="btn-group">
+
+                                        <button mat-raised-button class="bg-secondary text-white rounded-end-0"
+                                            (click)="openDialog(employee.id)" matTooltip="Edit Employee"
+                                            matTooltipPosition="above">
+                                            <mat-icon>edit</mat-icon> Edit</button>
+
+                                        <button mat-raised-button class="bg-danger text-white rounded-start-0"
+                                            (click)="deleteEmployee(employee.id)" matTooltip="Delete Employee"
+                                            matTooltipPosition="above">
+                                            <mat-icon>delete</mat-icon>Delete
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col d-flex justify-content-center">
+                <div class="pagination-container">
+
+                    <!-- <pagination *ngIf="totalItems() && pageSize()" [boundaryLinks]="true" [totalItems]="totalItems()"
+                    [itemsPerPage]="pageSize()" [maxSize]="10" (pageChanged)="onPageChange($event)" previousText="&lsaquo;"
+                    nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" [ngModel]="pageNumber()">
+                </pagination> -->
+
+                    <app-pagination [pageNumber]="employees()!.pageIndex" [pageSize]="employees()!.pageSize"
+                        [totalItems]="employees()!.totalCount" (pageChanges)="onPageChanges($event)"></app-pagination>
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+
+</section>
