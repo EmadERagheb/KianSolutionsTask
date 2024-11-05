@@ -15,7 +15,7 @@
                         [pageSize]="employees()!.pageSize"></app-paging-header>
                 </div>
                 <div class="add-question">
-                    <button mat-mini-fab class="bg-primary text-white" (click)="openDialog()"
+                    <button mat-mini-fab class="bg-primary text-white" (click)="openDialog(null)"
                         matTooltip="Add New Employee" matTooltipPosition="above">
                         <mat-icon>add</mat-icon></button>
                 </div>
@@ -57,7 +57,7 @@
                                     <div class="btn-group">
 
                                         <button mat-raised-button class="bg-secondary text-white rounded-end-0"
-                                            (click)="openDialog(employee.id)" matTooltip="Edit Employee"
+                                            (click)="openDialog(employee)" matTooltip="Edit Employee"
                                             matTooltipPosition="above">
                                             <mat-icon>edit</mat-icon> Edit</button>
 

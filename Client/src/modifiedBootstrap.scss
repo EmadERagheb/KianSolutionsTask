@@ -1,29 +1,21 @@
 
-// Custom Theming for Angular Material
-// For more information: https://material.angular.io/guide/theming
-@use '@angular/material' as mat;
-// Plus imports for other components in your app.
 
-// Include the common styles for Angular Material. We include this here so that you only
-// have to load a single css file for Angular Material in your app.
-// Be sure that you only ever include this mixin once!
+@use '@angular/material' as mat;
+
 @include mat.core();
 
-// Define the palettes for your theme using the Material Design palettes available in palette.scss
-// (imported above). For each palette, you can optionally specify a default, lighter, and darker
-// hue. Available color palettes: https://material.io/design/color/
-
+// Define primary palette (using teal/blue shades from the logo)
 $primary-palette: (
-  50: lighten(#1A1E2A, 40%),
-  100: lighten(#1A1E2A, 30%),
-  200: lighten(#1A1E2A, 20%),
-  300: lighten(#1A1E2A, 10%),
-  400: #1A1E2A,
-  500: #1A1E2A,
-  600: darken(#1A1E2A, 10%),
-  700: darken(#1A1E2A, 20%),
-  800: darken(#1A1E2A, 30%),
-  900: darken(#1A1E2A, 40%),
+  50: lighten(#0099CC, 40%),
+  100: lighten(#0099CC, 30%),
+  200: lighten(#0099CC, 20%),
+  300: lighten(#0099CC, 10%),
+  400: #0099CC, // Teal shade
+  500: #007DA5, // Darker teal
+  600: darken(#007DA5, 10%),
+  700: darken(#007DA5, 20%),
+  800: darken(#007DA5, 30%),
+  900: darken(#007DA5, 40%),
   contrast: (
     50: rgba(black, 0.87),
     100: rgba(black, 0.87),
@@ -38,17 +30,18 @@ $primary-palette: (
   )
 );
 
+// Define accent palette (using a lighter complementary color)
 $accent-palette: (
-  50: lighten(#D4AF37, 40%),
-  100: lighten(#D4AF37, 30%),
-  200: lighten(#D4AF37, 20%),
-  300: lighten(#D4AF37, 10%),
-  400: #D4AF37,
-  500: #D4AF37,
-  600: darken(#D4AF37, 10%),
-  700: darken(#D4AF37, 20%),
-  800: darken(#D4AF37, 30%),
-  900: darken(#D4AF37, 40%),
+  50: lighten(#00BFFF, 40%),
+  100: lighten(#00BFFF, 30%),
+  200: lighten(#00BFFF, 20%),
+  300: lighten(#00BFFF, 10%),
+  400: #00BFFF, // Lighter blue
+  500: #0099CC,
+  600: darken(#0099CC, 10%),
+  700: darken(#0099CC, 20%),
+  800: darken(#0099CC, 30%),
+  900: darken(#0099CC, 40%),
   contrast: (
     50: rgba(black, 0.87),
     100: rgba(black, 0.87),
@@ -63,49 +56,37 @@ $accent-palette: (
   )
 );
 
+// Define primary, accent, and warning colors
 $custom-primary: mat.define-palette($primary-palette);
 $custom-accent: mat.define-palette($accent-palette);
-
 $custom-warn: mat.define-palette(mat.$red-palette);
 
 // Define custom success and danger colors
 $custom-success: mat.define-palette(mat.$green-palette);
 $custom-danger: mat.define-palette(mat.$red-palette);
 
-// The warn palette is optional (defaults to red).
-
+// Theme configuration
 $custom-theme: mat.define-light-theme((
- color: (
-   primary: $custom-primary,
-   accent: $custom-accent,
-      warn: $custom-warn,
-
-    
- ),
- typography: mat.define-typography-config(),
- density: 0,
+  color: (
+    primary: $custom-primary,
+    accent: $custom-accent,
+    warn: $custom-warn,
+  ),
+  typography: mat.define-typography-config(),
+  density: 0,
 ));
 
-// Create the theme object. A theme consists of configurations for individual
-// theming systems such as "color" or "typography".
-
-
-// Include theme styles for core and each component used in your app.
-// Alternatively, you can import and @include the theme mixins for each component
-// that you are using.
+// Include theme styles
 @include mat.all-component-themes($custom-theme);
 
+// Fonts and colors
 $font-family-sans-serif: "Poppins", sans-serif;
-
-// Colors
-
-$primary: #1A1E2A;
-$secondary: #D4AF37;
+$primary: #0099CC; // Teal
+$secondary: #00BFFF; // Lighter blue
 $gray-900: #212529 !default;
-$dark:          $gray-900 !default;
-$black:    #000 !default;
+$dark: $gray-900 !default;
+$black: #000 !default;
 $headings-color: $dark;
-            
 $box-shadow-lg: 0 1rem 3rem rgba($black, 0.7) ;
 
 

@@ -32,7 +32,6 @@ import { MatConfirmationDialogComponent } from '../../_modals/mat-confirmation-d
   styleUrl: './employees-list.component.scss',
 })
 export class EmployeesListComponent implements OnInit {
-
   private employeeService = inject(EmployeeService);
   private dialogService = inject(DialogService);
   private toastrService = inject(ToastrService);
@@ -50,8 +49,8 @@ export class EmployeesListComponent implements OnInit {
       },
     });
   }
-  openDialog(id: number = 0) {
-    if (id === 0) {
+  openDialog(employee: Employee | null) {
+    if (!employee) {
       this.dialogService
         .openDialog(this.dialog, EmployeeModalComponent, {
           panelClass: 'custom-modal',
@@ -77,48 +76,44 @@ export class EmployeesListComponent implements OnInit {
           },
         });
     } else {
-      this.employeeService.getEmployee(id).subscribe({
-        next: (employee) => {
-          this.dialogService
-            .openDialog(this.dialog, EmployeeModalComponent, {
-              panelClass: 'custom-modal',
-              autoFocus: true,
-              disableClose: true,
-              data: { title: 'Edit Employee', employee: employee },
-            })
-            .pipe(filter((value) => !!value))
-            .subscribe({
-              next: (result) => {
-                this.employeeService
-                  .updateEmployee({ id, ...result })
-                  .subscribe({
-                    next: () => {
-                      this.loadEmployees();
-                      this.toastrService.success(
-                        'Employee updated successfully',
-                        'Success'
-                      );
-                    },
-                    error: (error) => {
-                      this.toastrService.error(
-                        'Error updating employee',
-                        'Error'
-                      );
-                    },
-                  });
+      this.dialogService
+        .openDialog(this.dialog, EmployeeModalComponent, {
+          panelClass: 'custom-modal',
+          autoFocus: true,
+          disableClose: true,
+          data: { title: 'Edit Employee', employee: employee },
+        })
+        .pipe(filter((value) => !!value))
+        .subscribe({
+          next: (result: Employee) => {
+            result.id = employee.id;
+            this.employeeService.updateEmployee(result).subscribe({
+              next: () => {
+                this.loadEmployees();
+                this.toastrService.success(
+                  'Employee updated successfully',
+                  'Success'
+                );
+              },
+              error: (error) => {
+                this.toastrService.error('Error updating employee', 'Error');
               },
             });
-        },
-      });
+          },
+        });
     }
   }
+
   deleteEmployee(id: number) {
     this.dialogService
-      .openDialog(this.dialog,MatConfirmationDialogComponent,{
+      .openDialog(this.dialog, MatConfirmationDialogComponent, {
         // panelClass: 'custom-modal',
         autoFocus: true,
         disableClose: true,
-        data: { title: 'Delete Employee', content: 'Are you sure you want to delete this employee?' },
+        data: {
+          title: 'Delete Employee',
+          content: 'Are you sure you want to delete this employee?',
+        },
       })
       .pipe(filter((value) => !!value))
       .subscribe({
@@ -126,7 +121,10 @@ export class EmployeesListComponent implements OnInit {
           this.employeeService.deleteEmployee(id).subscribe({
             next: () => {
               this.loadEmployees();
-              this.toastrService.success('Employee deleted successfully', 'Success');
+              this.toastrService.success(
+                'Employee deleted successfully',
+                'Success'
+              );
             },
             error: (error) => {
               this.toastrService.error('Error deleting employee', 'Error');
@@ -134,7 +132,7 @@ export class EmployeesListComponent implements OnInit {
           });
         },
       });
-    }
+  }
   onPageChanges(event: number) {
     if (this.employeeService.employeeParams().pageIndex !== event) {
       this.employeeService.employeeParams().pageIndex = event;
